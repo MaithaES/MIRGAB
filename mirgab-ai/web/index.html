@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mirgab AI | مِرقاب</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#040b24;--bg2:#0a1638;--line:#1d2f63;--cyan:#22e0f2;--cyan2:#0fb6d6;--text:#e8f1ff;--muted:#8fa3c9;
+--safe:#22c55e;--caution:#facc15;--suspicious:#fb923c;--critical:#ef4444}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Tajawal",system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--text);
+background:radial-gradient(1200px 600px at 80% -10%,#0c2a6b55,transparent),radial-gradient(900px 500px at 0% 100%,#0a3a6b44,transparent),var(--bg);min-height:100vh}
+.wrap{max-width:1000px;margin:0 auto;padding:18px}
+header{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{display:flex;align-items:center;gap:12px}
+.brand img{height:50px;border-radius:10px}
+.brand h1{margin:0;font-size:22px;letter-spacing:1px}
+.brand small{color:var(--cyan);display:block;font-size:13px}
+.btn{border:1px solid var(--line);background:var(--bg2);color:var(--text);padding:8px 14px;border-radius:10px;cursor:pointer;font:inherit;font-size:14px;text-decoration:none;display:inline-block}
+.btn:hover{border-color:var(--cyan)}
+.btn.on{border-color:var(--cyan);background:#13285e}
+.hero{text-align:center;margin:26px 0 16px}
+.hero h2{font-size:32px;margin:0 0 8px;font-weight:800}
+.hero h2 span{color:var(--cyan)}
+.hero p{color:var(--muted);margin:0 auto;max-width:620px;line-height:1.7}
+.beta{display:inline-block;margin-bottom:10px;font-size:12px;padding:3px 10px;border-radius:99px;background:#2a1e5a;color:#ddd6fe}
+.card{background:linear-gradient(180deg,#10214f,#0c1a40);border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:0 10px 40px #0006}
+textarea,input{width:100%;background:#071233;border:1px solid var(--line);color:var(--text);border-radius:12px;padding:13px;font:inherit;font-size:16px;resize:vertical}
+textarea:focus,input:focus{outline:none;border-color:var(--cyan);box-shadow:0 0 0 3px #22e0f222}
+.row{display:flex;gap:10px;margin-top:10px;flex-wrap:wrap;align-items:center}
+.primary{background:linear-gradient(90deg,var(--cyan),var(--cyan2));color:#04122e;border:0;padding:13px 26px;border-radius:12px;cursor:pointer;font:inherit;font-weight:800;font-size:17px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.chiplbl{width:100%;color:var(--muted);font-size:13px}
+.chip{font-size:13px;padding:6px 10px;border-radius:999px;border:1px solid var(--line);background:#0a1840;color:var(--muted);cursor:pointer}
+.chip:hover{color:var(--text);border-color:var(--cyan)}
+.privacy{color:var(--muted);font-size:12.5px;margin-top:10px}
+#result{display:none;margin-top:16px}
+.grid{display:grid;grid-template-columns:280px 1fr;gap:14px}
+.gauge{text-align:center}
+.lvl{font-size:22px;font-weight:800;margin-top:-6px}
+.cat{color:var(--muted);margin-top:6px}
+.official{margin-top:8px;color:var(--safe);font-weight:700}
+h3{margin:0 0 12px;font-size:17px;color:var(--cyan)}
+.reason{display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px dashed var(--line)}
+.reason:last-child{border:0}
+.tag{font-size:11px;padding:2px 7px;border-radius:6px;background:#132a63;color:var(--cyan);white-space:nowrap}
+.tag.text{background:#2a1e5a;color:#c4b5fd}.tag.trust{background:#123d2a;color:#86efac}
+.w{margin-inline-start:auto;font-weight:700;color:var(--muted);font-size:13px;white-space:nowrap}
+.ev{color:var(--muted);font-size:12px;unicode-bidi:plaintext}
+.b{margin:9px 0}.lbl{display:flex;justify-content:space-between;font-size:14px;margin-bottom:4px}
+.bar{height:9px;background:#071233;border-radius:99px;overflow:hidden}
+.bar i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--cyan2),var(--cyan));transition:width .8s}
+.terms span{display:inline-block;margin:3px;padding:4px 9px;border-radius:8px;background:#2a1e5a;color:#ddd6fe;font-size:13px}
+ul.adv{margin:0;padding-inline-start:18px;line-height:1.9}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+.report{background:#2a0f17;border:1px solid #5b1a2a;margin-top:14px}.report h3{color:#fca5a5}
+.fb{margin-top:14px;border-color:#22e0f255}
+.fb .q{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 10px}
+.fb label{display:flex;gap:8px;align-items:center;color:var(--muted);font-size:13px;margin-top:8px}
+.fb label input{width:auto}
+.msg{margin-top:10px;font-size:14px;color:var(--safe)}
+.alt{margin-top:10px;font-size:13px;color:var(--muted)}
+.kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:12px}
+.kpi{background:#071233;border:1px solid var(--line);border-radius:12px;padding:10px;text-align:center}.kpi b{display:block;font-size:24px}.kpi span{font-size:12px;color:var(--muted)}
+.fbi{border-top:1px dashed var(--line);padding:10px 0}.fbi .top{display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:13px}
+.pill{padding:2px 8px;border-radius:99px;font-size:12px;background:#132a63}
+.fbi .cmt{margin-top:6px;font-size:15px}.fbi .chk{margin-top:4px;font-size:12.5px;color:var(--muted);unicode-bidi:plaintext;word-break:break-word}
+@media(max-width:780px){.kpis{grid-template-columns:repeat(3,1fr)}}
+footer{text-align:center;color:var(--muted);font-size:12.5px;margin:30px 0 10px;line-height:1.7}
+@media(max-width:780px){.grid,.cols{grid-template-columns:1fr}.hero h2{font-size:25px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand"><img src="data:image/jpeg;base64,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" alt="Mirgab logo"><div><h1>MIRGAB AI</h1><small data-i="tagline"></small></div></div>
+    <div style="display:flex;gap:8px"><button class="btn" id="inboxBtn" style="display:none" data-i="inbox"></button><button class="btn" id="langBtn">English</button></div>
+  </header>
+
+  <section class="hero">
+    <span class="beta" data-i="beta"></span>
+    <h2 data-i="heroTitle"></h2>
+    <p data-i="heroSub"></p>
+  </section>
+
+  <div class="card">
+    <textarea id="text" rows="5" data-ph="placeholder"></textarea>
+    <div class="row">
+      <input id="url" data-ph="urlPlaceholder" style="flex:1;min-width:200px" dir="ltr">
+      <button class="primary" id="go" data-i="check"></button>
+    </div>
+    <div class="chips" id="examples"></div>
+    <div class="privacy" data-i="privacy"></div>
+  </div>
+
+  <div id="result">
+    <div class="grid">
+      <div class="card gauge">
+        <svg viewBox="0 0 200 120" width="100%" style="max-width:260px" role="img" aria-label="risk score"><path d="M20 105 A80 80 0 0 1 180 105" stroke="#071233" stroke-width="16" fill="none" stroke-linecap="round"/>
+          <path id="arc" d="M20 105 A80 80 0 0 1 180 105" stroke="var(--cyan)" stroke-width="16" fill="none" stroke-linecap="round" stroke-dasharray="251.3" stroke-dashoffset="251.3" style="transition:stroke-dashoffset 1s,stroke .5s"/>
+          <text id="scoreTxt" x="100" y="98" text-anchor="middle" font-size="38" font-weight="800" fill="#e8f1ff">0</text></svg>
+        <div class="lvl" id="lvl"></div><div class="cat" id="cat"></div><div class="official" id="official"></div>
+        <div style="margin-top:14px;text-align:start"><h3 data-i="engines"></h3><div id="components"></div></div>
+      </div>
+      <div class="card">
+        <h3 data-i="why"></h3><div id="reasons"></div>
+        <div id="termsBox" style="margin-top:14px"><h3 data-i="aiTerms"></h3><div class="terms" id="terms"></div></div>
+      </div>
+    </div>
+    <div class="cols">
+      <div class="card"><h3 data-i="impact"></h3><div id="impact"></div></div>
+      <div class="card"><h3 data-i="advice"></h3><ul class="adv" id="advice"></ul></div>
+    </div>
+    <div class="card report" id="reportBox"><h3 data-i="reportTitle"></h3><ul class="adv" id="channels"></ul></div>
+
+    <div class="card fb">
+      <h3 data-i="fbTitle"></h3>
+      <div class="q">
+        <button class="btn" data-v="right" data-i="fbRight"></button>
+        <button class="btn" data-v="too_high" data-i="fbHigh"></button>
+        <button class="btn" data-v="too_low" data-i="fbLow"></button>
+      </div>
+      <textarea id="fbText" rows="2" data-ph="fbPh"></textarea>
+      <label><input type="checkbox" id="fbInclude" checked><span data-i="fbInclude"></span></label>
+      <div class="row"><button class="primary" id="fbSend" data-i="fbSend" style="padding:10px 20px;font-size:15px"></button></div>
+      <div class="msg" id="fbMsg"></div>
+      <div class="alt" id="fbAlt" style="display:none">
+        <span data-i="fbAltText"></span>
+        <div class="row"><a class="btn" id="waLink" target="_blank" rel="noopener" data-i="fbWhatsApp"></a><button class="btn" id="copyBtn" data-i="fbCopy"></button></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" id="inbox" style="display:none;margin-top:16px">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
+      <h3 style="margin:0" data-i="inboxTitle"></h3>
+      <div style="display:flex;gap:8px"><button class="btn" id="inboxRefresh" data-i="refresh"></button><button class="btn" id="inboxCsv" data-i="copyCsv"></button><button class="btn" id="inboxClose">✕</button></div>
+    </div>
+    <p class="ev" data-i="inboxNote" style="margin:8px 0 12px"></p>
+    <div class="kpis" id="inboxKpis"></div>
+    <div id="inboxList"></div>
+  </div>
+
+  <footer data-i="footer"></footer>
+</div>
+
+<script src="engine.js"></script>
+<script>
+const I18N={
+ ar:{tagline:"حمايتك قبل لا تضغط",beta:"نسخة تجريبية - رأيك يهمنا",heroTitle:"تحقّق <span>قبل</span> أن تضغط",
+  heroSub:"الصق رابطاً أو نص إعلان أو رسالة وصلتك، وسيحلله مِرقاب بالذكاء الاصطناعي ويخبرك بمستوى الخطورة وأسبابها وكيف تحمي نفسك.",
+  placeholder:"الصق هنا نص الإعلان أو الرسالة أو الرابط…",urlPlaceholder:"رابط الموقع (اختياري) https://",check:"افحص الآن",
+  privacy:"🔒 الفحص يتم داخل متصفحك، ولا يتم إرسال ما تلصقه إلى أي مكان. لا تلصق كلمات المرور أو أرقام البطاقات.",
+  chipsLbl:"أو جرّب مثالاً:",why:"لماذا؟ (أسباب الاشتباه)",aiTerms:"كلمات رصدها نموذج الذكاء الاصطناعي",impact:"الأثر متعدد الأبعاد",advice:"كيف تحمي نفسك",
+  reportTitle:"إذا تعرضت للاحتيال أو اشتبهت به",engines:"محركات التحليل",
+  financial:"مالي",health:"صحي",identity:"البيانات والهوية",social:"اجتماعي وثقة",url:"تحليل الرابط",content_rules:"قواعد الخبراء",ml:"نموذج AI",trust_reduction:"مؤشرات الثقة (تخفيض)",
+  src_url:"رابط",src_text:"محتوى",src_trust:"ثقة",none:"لا توجد مؤشرات احتيال واضحة.",
+  fbTitle:"هل كانت النتيجة صحيحة؟",fbRight:"👍 صحيحة",fbHigh:"⬆️ الخطورة مبالغ فيها",fbLow:"⬇️ الخطورة أقل من الحقيقة",
+  fbPh:"ملاحظاتك (اختياري): ماذا توقعت؟ ما الذي يمكن تحسينه؟",fbInclude:"أرفق النص الذي فحصته (يساعدنا على التحسين)",fbSend:"أرسل الملاحظة",
+  fbPick:"اختر أولاً: صحيحة، مبالغ فيها، أو أقل.",fbSaved:"✅ شكراً! تم حفظ ملاحظتك.",
+  fbAltText:"أرسل ملاحظتك لفريق مِرقاب عبر واتساب أو انسخها:",fbWhatsApp:"إرسال عبر واتساب",fbCopy:"نسخ الملاحظة",copied:"✅ تم النسخ",
+  inbox:"📥 الملاحظات",inboxTitle:"صندوق ملاحظات المختبرين",refresh:"تحديث",copyCsv:"نسخ كجدول (CSV)",
+  inboxNote:"يظهر هذا القسم لك فقط (صاحبة الصفحة). الملاحظات المرسلة عبر واتساب لا تظهر هنا.",
+  kTotal:"إجمالي",kRight:"👍 صحيحة",kHigh:"⬆️ مبالغ فيها",kLow:"⬇️ أقل",kComments:"تعليقات مكتوبة",
+  noFb:"لا توجد ملاحظات بعد.",tester:"مختبر",noComment:"(بدون تعليق)",loading:"جارٍ التحميل…",loadFail:"تعذر تحميل الملاحظات الآن.",
+  footer:"مِرقاب • نموذج أولي لمسابقة شرطة أبوظبي × 42 أبوظبي<br>النتائج إرشادية ولا تغني عن التحقق من الجهات الرسمية • للإبلاغ: خدمة أمان 8002626 أو SMS 2828"},
+ en:{tagline:"Protection before you click",beta:"Beta - your feedback matters",heroTitle:"Check <span>before</span> you click",
+  heroSub:"Paste a link, an ad or a message you received. Mirgab analyses it with AI and tells you the risk level, the reasons, and how to protect yourself.",
+  placeholder:"Paste the ad, message or link here…",urlPlaceholder:"Website link (optional) https://",check:"Check now",
+  privacy:"🔒 The check runs inside your browser; what you paste is not sent anywhere. Don't paste passwords or card numbers.",
+  chipsLbl:"Or try an example:",why:"Why? (reasons for suspicion)",aiTerms:"Words flagged by the AI model",impact:"Multi-dimensional impact",advice:"How to protect yourself",
+  reportTitle:"If you were scammed or suspect fraud",engines:"Analysis engines",
+  financial:"Financial",health:"Health",identity:"Data & identity",social:"Social & trust",url:"URL analysis",content_rules:"Expert rules",ml:"AI model",trust_reduction:"Trust signals (reduction)",
+  src_url:"URL",src_text:"Content",src_trust:"Trust",none:"No clear fraud indicators.",
+  fbTitle:"Was this result right?",fbRight:"👍 Right",fbHigh:"⬆️ Risk too high",fbLow:"⬇️ Risk too low",
+  fbPh:"Your comments (optional): what did you expect? What could be better?",fbInclude:"Include the text I checked (helps us improve)",fbSend:"Send feedback",
+  fbPick:"Choose first: right, too high, or too low.",fbSaved:"✅ Thank you! Your feedback was saved.",
+  fbAltText:"Send your feedback to the Mirgab team via WhatsApp, or copy it:",fbWhatsApp:"Send via WhatsApp",fbCopy:"Copy feedback",copied:"✅ Copied",
+  inbox:"📥 Feedback",inboxTitle:"Tester feedback inbox",refresh:"Refresh",copyCsv:"Copy as table (CSV)",
+  inboxNote:"Only you (the page owner) can see this section. Feedback sent through WhatsApp doesn't appear here.",
+  kTotal:"Total",kRight:"👍 Right",kHigh:"⬆️ Too high",kLow:"⬇️ Too low",kComments:"Written comments",
+  noFb:"No feedback yet.",tester:"Tester",noComment:"(no comment)",loading:"Loading…",loadFail:"Couldn't load feedback right now.",
+  footer:"Mirgab • Prototype for the Abu Dhabi Police × 42 Abu Dhabi competition<br>Results are guidance; always verify with official sources • To report: Aman 8002626 or SMS 2828"}
+};
+const EXAMPLES=[
+ {ar:"🏠 إعلان شقة",en:"🏠 Rental ad",t:"فيلا فاخرة في جزيرة الريم بإيجار 1200 درهم شهري فقط. المالك خارج الدولة، حول العربون ونرسل لك المفاتيح. واتساب فقط"},
+ {ar:"💊 أدوية",en:"💊 Medicine",t:"Buy Ozempic and Xanax without prescription, discreet delivery anywhere in UAE. Order on WhatsApp only."},
+ {ar:"🛒 متجر",en:"🛒 Store",t:"ايفون 17 برو بخصم 90% فقط 499 درهم! تحويل بنكي فقط ولا يوجد دفع عند الاستلام. العرض اليوم فقط",u:"https://iphone-uae-deals.shop"},
+ {ar:"📈 استثمار",en:"📈 Investment",t:"Guaranteed returns of 40% weekly! Join our VIP group, invite friends for referral bonus. Minimum deposit 500 AED in USDT."},
+ {ar:"🏦 رسالة بنك",en:"🏦 Bank SMS",t:"عميلنا العزيز، سيتم إيقاف حسابك. يرجى تحديث الهوية فوراً وإدخال رمز التحقق عبر الرابط https://adcb-secure-update.com/login"},
+ {ar:"📍 نتيجة خرائط",en:"📍 Maps result",t:"Found the bank customer service number on Google Maps listing, they asked me to share my card number and OTP",u:"https://maps.app.goo.gl/Xy12ab"},
+ {ar:"✅ رسالة سليمة",en:"✅ Safe message",t:"بنك أبوظبي التجاري: لن نطلب منك أبداً رمز التحقق أو الرقم السري. لا تشارك رمز التحقق مع أي شخص.",u:"https://www.adcb.com"}
+];
+let lang="ar",last=null,lastInput=null,E=null,verdict=null;
+try{lang=localStorage.getItem("mirgab_lang")||"ar"}catch(e){}
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const COLORS={safe:"var(--safe)",caution:"var(--caution)",suspicious:"var(--suspicious)",critical:"var(--critical)"};
+
+function applyLang(){
+  const L=I18N[lang];document.documentElement.lang=lang;document.documentElement.dir=lang==="ar"?"rtl":"ltr";
+  document.querySelectorAll("[data-i]").forEach(e=>e.innerHTML=L[e.dataset.i]);
+  document.querySelectorAll("[data-ph]").forEach(e=>e.placeholder=L[e.dataset.ph]);
+  $("langBtn").textContent=lang==="ar"?"English":"العربية";
+  $("examples").innerHTML=`<span class="chiplbl">${L.chipsLbl}</span>`+EXAMPLES.map((e,k)=>`<span class="chip" data-k="${k}">${e[lang]}</span>`).join("");
+  document.querySelectorAll(".chip[data-k]").forEach(c=>c.onclick=()=>{const e=EXAMPLES[c.dataset.k];$("text").value=e.t;$("url").value=e.u||"";run();});
+  if(last)render(last);
+}
+$("langBtn").onclick=()=>{lang=lang==="ar"?"en":"ar";try{localStorage.setItem("mirgab_lang",lang)}catch(e){};applyLang();};
+
+function bar(label,v,color){return `<div class="b"><div class="lbl"><span>${label}</span><b>${v}</b></div><div class="bar"><i style="width:${v}%;${color?`background:${color}`:""}"></i></div></div>`}
+let pending=false;
+function run(){
+  if(!E){pending=true;return;}
+  const text=$("text").value.trim(),url=$("url").value.trim();if(!text&&!url)return;
+  lastInput={text,url};last=E.analyze({text,url});verdict=null;
+  document.querySelectorAll(".fb .q .btn").forEach(b=>b.classList.remove("on"));
+  $("fbText").value="";$("fbMsg").textContent="";$("fbAlt").style.display="none";
+  render(last);$("result").style.display="block";$("result").scrollIntoView({behavior:"smooth"});
+}
+$("go").onclick=run;
+$("text").addEventListener("keydown",e=>{if(e.key==="Enter"&&(e.ctrlKey||e.metaKey))run();});
+function render(r){
+  const L=I18N[lang],col=COLORS[r.level];
+  $("arc").style.strokeDashoffset=251.3*(1-r.score/100);$("arc").style.stroke=col;
+  $("scoreTxt").textContent=r.score;$("lvl").textContent=r.level_label[lang];$("lvl").style.color=col;
+  $("cat").textContent=r.category[lang];$("official").textContent=r.official_entity?("✔ "+r.official_entity):"";
+  $("components").innerHTML=["url","content_rules","ml","trust_reduction"].map(k=>bar(L[k],r.components[k],k==="trust_reduction"?"var(--safe)":"")).join("");
+  const items=r.reasons.map(x=>`<div class="reason"><span class="tag ${x.source}">${L["src_"+x.source]||x.source}</span><div>${esc(x[lang])}${x.evidence&&x.evidence.length?`<div class="ev">${x.evidence.map(esc).join(" · ")}</div>`:""}</div><span class="w">+${Math.round(x.weight*100)}</span></div>`)
+   .concat(r.trust_signals.map(x=>`<div class="reason"><span class="tag trust">${L.src_trust}</span><div>${esc(x[lang])}</div><span class="w" style="color:var(--safe)">−${Math.round(x.weight*100)}</span></div>`));
+  $("reasons").innerHTML=items.length?items.join(""):`<p class="ev">${L.none}</p>`;
+  const terms=r.ml&&r.ml.top_fraud_terms.length?r.ml.top_fraud_terms:null;
+  $("termsBox").style.display=terms?"block":"none";if(terms)$("terms").innerHTML=terms.map(t=>`<span>${esc(t.term)}</span>`).join("");
+  $("impact").innerHTML=["financial","health","identity","social"].map(k=>bar(L[k],r.impact[k],r.impact[k]>=60?"var(--critical)":r.impact[k]>=30?"var(--suspicious)":"")).join("");
+  $("advice").innerHTML=r.advice[lang].map(a=>`<li>${esc(a)}</li>`).join("");
+  $("reportBox").style.display=r.report_channels?"block":"none";
+  if(r.report_channels)$("channels").innerHTML=r.report_channels[lang].map(a=>`<li>${esc(a)}</li>`).join("");
+}
+
+// ---------------- Feedback ----------------
+document.querySelectorAll(".fb .q .btn").forEach(b=>b.onclick=()=>{verdict=b.dataset.v;document.querySelectorAll(".fb .q .btn").forEach(x=>x.classList.toggle("on",x===b));});
+function feedbackRecord(){
+  return {ts:new Date().toISOString(),lang,verdict,comment:$("fbText").value.trim().slice(0,1000),
+    score:last.score,level:last.level,category:last.category.key,
+    input:$("fbInclude").checked?{text:lastInput.text.slice(0,1500),url:lastInput.url.slice(0,500)}:null};
+}
+function feedbackText(f){
+  const v={right:"Right ✅",too_high:"Risk too high ⬆️",too_low:"Risk too low ⬇️"}[f.verdict];
+  let s=`Mirgab feedback\nResult: ${f.score}/100 (${f.level}, ${f.category})\nVerdict: ${v}`;
+  if(f.comment)s+=`\nComment: ${f.comment}`;
+  if(f.input){if(f.input.text)s+=`\nChecked text: ${f.input.text}`;if(f.input.url)s+=`\nChecked link: ${f.input.url}`;}
+  return s;
+}
+let dbP=null,userP=null;
+try{if(window.claude&&claude.use){dbP=claude.use("db");userP=claude.use("user");}}catch(e){}
+async function saveToDb(f){
+  if(!dbP||!userP)return false;
+  const timeout=new Promise(r=>setTimeout(()=>r(null),8000));
+  try{
+    const [db,user]=await Promise.race([Promise.all([dbP,userP]),timeout.then(()=>[null,null])]);
+    if(!db||!user)return false;
+    const uid=await user.id();if(!uid)return false;
+    const ref=db.collection("feedback").doc(uid);
+    const snap=await ref.get();
+    const prev=snap&&snap.exists&&snap.data&&snap.data()?snap.data().entries||[]:[];
+    await ref.set({entries:prev.concat([f]).slice(-200),updated:f.ts});
+    return true;
+  }catch(e){return false;}
+}
+$("fbSend").onclick=async()=>{
+  const L=I18N[lang];if(!last)return;
+  if(!verdict){$("fbMsg").style.color="var(--caution)";$("fbMsg").textContent=L.fbPick;return;}
+  const f=feedbackRecord();$("fbSend").disabled=true;
+  const ok=await saveToDb(f);$("fbSend").disabled=false;
+  const txt=feedbackText(f);
+  $("waLink").href="https://wa.me/?text="+encodeURIComponent(txt);
+  $("copyBtn").onclick=async()=>{try{await navigator.clipboard.writeText(txt);$("copyBtn").textContent=L.copied;}catch(e){}};
+  if(ok){$("fbMsg").style.color="var(--safe)";$("fbMsg").textContent=L.fbSaved;$("fbAlt").style.display="none";}
+  else{$("fbMsg").textContent="";$("fbAlt").style.display="block";}
+};
+
+// ---------------- Owner-only feedback inbox ----------------
+let fbRows=[];
+(async()=>{try{if(!userP)return;const u=await userP;if(u&&(await u.canEdit())){$("inboxBtn").style.display="inline-block";}}catch(e){}})();
+async function loadInbox(){
+  const L=I18N[lang];$("inboxList").innerHTML=`<p class="ev">${L.loading}</p>`;$("inboxKpis").innerHTML="";
+  try{
+    const db=await dbP;if(!db)throw 0;
+    const snap=await Promise.race([db.collection("feedback").get(),new Promise((_,rej)=>setTimeout(()=>rej(0),10000))]);
+    fbRows=[];snap.docs.forEach((d,i)=>{const data=d.data()||{};(data.entries||[]).forEach(e=>fbRows.push({...e,tester:i+1}));});
+    fbRows.sort((a,b)=>String(b.ts).localeCompare(String(a.ts)));renderInbox();
+  }catch(e){$("inboxList").innerHTML=`<p class="ev">${L.loadFail}</p>`;}
+}
+function renderInbox(){
+  const L=I18N[lang],n=v=>fbRows.filter(r=>r.verdict===v).length;
+  const k=[[fbRows.length,L.kTotal],[n("right"),L.kRight],[n("too_high"),L.kHigh],[n("too_low"),L.kLow],[fbRows.filter(r=>r.comment).length,L.kComments]];
+  $("inboxKpis").innerHTML=k.map(([v,t])=>`<div class="kpi"><b>${v}</b><span>${t}</span></div>`).join("");
+  const vl={right:L.kRight,too_high:L.kHigh,too_low:L.kLow};
+  $("inboxList").innerHTML=fbRows.length?fbRows.map(r=>`<div class="fbi"><div class="top"><span class="pill">${esc(vl[r.verdict]||r.verdict)}</span><span class="pill" style="color:${COLORS[r.level]||"inherit"}">${r.score}/100</span><span class="ev">${esc(L.tester)} ${r.tester} · ${esc(new Date(r.ts).toLocaleString(lang==="ar"?"ar-AE":"en-GB"))}</span></div>
+    <div class="cmt">${r.comment?esc(r.comment):`<span class="ev">${L.noComment}</span>`}</div>
+    ${r.input?`<div class="chk">${esc([r.input.text,r.input.url].filter(Boolean).join(" | ").slice(0,300))}</div>`:""}</div>`).join(""):`<p class="ev">${L.noFb}</p>`;
+}
+$("inboxBtn").onclick=()=>{$("inbox").style.display="block";loadInbox();$("inbox").scrollIntoView({behavior:"smooth"});};
+$("inboxRefresh").onclick=loadInbox;
+$("inboxClose").onclick=()=>{$("inbox").style.display="none";};
+$("inboxCsv").onclick=async()=>{
+  const q=v=>'"'+String(v??"").replace(/"/g,'""')+'"';
+  const csv=["time,tester,verdict,score,level,category,comment,checked_text,checked_url"].concat(fbRows.map(r=>[r.ts,r.tester,r.verdict,r.score,r.level,r.category,r.comment,r.input&&r.input.text,r.input&&r.input.url].map(q).join(","))).join("\n");
+  try{await navigator.clipboard.writeText(csv);$("inboxCsv").textContent=I18N[lang].copied;setTimeout(()=>$("inboxCsv").textContent=I18N[lang].copyCsv,2000);}catch(e){}
+};
+const _applyLang=applyLang;applyLang=function(){_applyLang();if($("inbox").style.display==="block")renderInbox();};
+
+applyLang();
+fetch("engine_data.json").then(r=>r.json()).then(d=>{E=MirgabEngine(d);if(pending)run();}).catch(()=>{});
+</script>
+</body>
+</html>

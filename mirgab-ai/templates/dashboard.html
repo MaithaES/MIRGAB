@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mirgab Dashboard | لوحة مِرقاب</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#040b24;--bg2:#0a1638;--line:#1d2f63;--cyan:#22e0f2;--text:#e8f1ff;--muted:#8fa3c9;
+--safe:#22c55e;--caution:#facc15;--suspicious:#fb923c;--critical:#ef4444}
+*{box-sizing:border-box}body{margin:0;font-family:"Tajawal",system-ui,sans-serif;background:var(--bg);color:var(--text)}
+.wrap{max-width:1040px;margin:0 auto;padding:20px}
+header{display:flex;justify-content:space-between;align-items:center}
+header img{height:48px;border-radius:8px;vertical-align:middle;margin-inline-end:10px}
+.btn{border:1px solid var(--line);background:var(--bg2);color:var(--text);padding:8px 14px;border-radius:10px;cursor:pointer;font:inherit;text-decoration:none}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:22px 0}
+.card{background:linear-gradient(180deg,#10214f,#0c1a40);border:1px solid var(--line);border-radius:16px;padding:18px}
+.kpi b{font-size:34px;display:block}.kpi span{color:var(--muted)}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+h3{color:var(--cyan);margin:0 0 12px}
+.b{margin:9px 0}.lbl{display:flex;justify-content:space-between;font-size:14px}
+.bar{height:9px;background:#071233;border-radius:99px;overflow:hidden;margin-top:4px}.bar i{display:block;height:100%;background:var(--cyan)}
+table{width:100%;border-collapse:collapse;font-size:14px}td{padding:7px 4px;border-bottom:1px dashed var(--line)}
+td.d{direction:ltr;text-align:start}.muted{color:var(--muted)}
+@media(max-width:800px){.kpis,.cols{grid-template-columns:1fr 1fr}.cols{grid-template-columns:1fr}}
+</style></head>
+<body><div class="wrap">
+<header><div><img src="/static/logo.jpg"><b id="title"></b></div><div><a class="btn" href="/" id="back"></a> <button class="btn" id="lang"></button></div></header>
+<div class="kpis">
+  <div class="card kpi"><b id="k1">0</b><span data-i="scans"></span></div>
+  <div class="card kpi"><b id="k2" style="color:var(--critical)">0</b><span data-i="critical"></span></div>
+  <div class="card kpi"><b id="k3" style="color:var(--suspicious)">0</b><span data-i="suspicious"></span></div>
+  <div class="card kpi"><b id="k4" style="color:var(--cyan)">0</b><span data-i="reports"></span></div>
+</div>
+<div class="cols">
+  <div class="card"><h3 data-i="byCat"></h3><div id="cats"></div></div>
+  <div class="card"><h3 data-i="byLevel"></h3><div id="levels"></div></div>
+  <div class="card"><h3 data-i="topRisky"></h3><table id="risky"></table></div>
+  <div class="card"><h3 data-i="topReported"></h3><table id="reported"></table></div>
+</div>
+<p class="muted" data-i="privacy"></p>
+</div>
+<script>
+const T={ar:{title:"لوحة مؤشرات مِرقاب",back:"الفحص",scans:"إجمالي الفحوصات",critical:"خطير",suspicious:"مشبوه",reports:"بلاغات المجتمع",
+byCat:"الفحوصات المشبوهة حسب المجال",byLevel:"التوزيع حسب مستوى الخطورة",topRisky:"أخطر النطاقات المفحوصة",topReported:"الأكثر إبلاغاً",
+privacy:"🔒 الخصوصية: لا يتم حفظ نص الرسائل، فقط النطاق ودرجة الخطورة والمجال.",empty:"لا توجد بيانات بعد",
+cat:{real_estate:"احتيال عقاري",pharma:"أدوية غير مرخصة",fake_store:"متاجر وهمية",investment:"احتيال استثماري",impersonation:"انتحال جهات",maps:"روابط الخرائط",legit:"سليم"},
+lvl:{safe:"منخفض",caution:"حذر",suspicious:"مشبوه",critical:"خطير"}},
+en:{title:"Mirgab Dashboard",back:"Scanner",scans:"Total scans",critical:"Critical",suspicious:"Suspicious",reports:"Community reports",
+byCat:"Suspicious scans by fraud domain",byLevel:"Distribution by risk level",topRisky:"Riskiest domains scanned",topReported:"Most reported",
+privacy:"🔒 Privacy: message text is never stored - only domain, score and category.",empty:"No data yet",
+cat:{real_estate:"Real estate",pharma:"Unlicensed meds",fake_store:"Fake stores",investment:"Investment",impersonation:"Impersonation",maps:"Maps links",legit:"Legit"},
+lvl:{safe:"Low",caution:"Caution",suspicious:"Suspicious",critical:"Critical"}}};
+let lang=localStorage.getItem("mirgab_lang")||"ar",S=null;
+const $=i=>document.getElementById(i), esc=s=>String(s).replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
+const C={safe:"var(--safe)",caution:"var(--caution)",suspicious:"var(--suspicious)",critical:"var(--critical)"};
+function bars(obj,names,colors,order){const tot=Object.values(obj).reduce((a,b)=>a+b,0)||1;const e=Object.entries(obj);
+ return e.length?e.sort((a,b)=>order?order.indexOf(a[0])-order.indexOf(b[0]):b[1]-a[1]).map(([k,v])=>`<div class="b"><div class="lbl"><span>${names[k]||k}</span><b>${v}</b></div><div class="bar"><i style="width:${100*v/tot}%;${colors&&colors[k]?"background:"+colors[k]:""}"></i></div></div>`).join(""):`<p class="muted">${T[lang].empty}</p>`}
+function render(){const L=T[lang];document.documentElement.dir=lang==="ar"?"rtl":"ltr";
+ document.querySelectorAll("[data-i]").forEach(e=>e.textContent=L[e.dataset.i]);$("title").textContent=L.title;$("back").textContent=L.back;$("lang").textContent=lang==="ar"?"English":"العربية";
+ if(!S)return;$("k1").textContent=S.total_scans;$("k2").textContent=S.by_level.critical||0;$("k3").textContent=S.by_level.suspicious||0;$("k4").textContent=S.reports;
+ $("cats").innerHTML=bars(S.by_category,L.cat);$("levels").innerHTML=bars(S.by_level,L.lvl,C,["critical","suspicious","caution","safe"]);
+ $("risky").innerHTML=S.top_risky.length?S.top_risky.map(r=>`<tr><td class="d">${esc(r[0])}</td><td><b>${r[1]}</b>/100</td><td class="muted">×${r[2]}</td></tr>`).join(""):`<tr><td class="muted">${L.empty}</td></tr>`;
+ $("reported").innerHTML=S.top_reported.length?S.top_reported.map(r=>`<tr><td class="d">${esc(r[0])}</td><td><b>${r[1]}</b></td></tr>`).join(""):`<tr><td class="muted">${L.empty}</td></tr>`;}
+$("lang").onclick=()=>{lang=lang==="ar"?"en":"ar";localStorage.setItem("mirgab_lang",lang);render();};
+fetch("/api/stats").then(r=>r.json()).then(j=>{S=j;render();});render();
+</script></body></html>

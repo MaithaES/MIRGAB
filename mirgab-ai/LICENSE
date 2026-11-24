@@ -1,0 +1,12 @@
+Copyright (c) 2026 Team Mirgab (Asma Alzaabi, Alyazeya Altamimi, Maitha Alkaabi,
+Mariam Alkarbi, Alanoud Almahri). All rights reserved.
+
+This prototype was developed for the Abu Dhabi Police x 42 Abu Dhabi Hackathon.
+Per the hackathon terms, the team retains full ownership of the prototype.
+The source code is shared with the organizers and judges for evaluation.
+No other use, copying or distribution is permitted without written permission
+from the team.
+
+Third-party components keep their own licenses: Flask (BSD-3-Clause),
+scikit-learn (BSD-3-Clause), NumPy (BSD-3-Clause), joblib (BSD-3-Clause),
+pytest (MIT), Tajawal font via Google Fonts (SIL Open Font License 1.1).

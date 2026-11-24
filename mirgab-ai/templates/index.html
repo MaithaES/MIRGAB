@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mirgab AI | مِرقاب</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#040b24; --bg2:#0a1638; --card:#0e1d47; --line:#1d2f63;
+  --cyan:#22e0f2; --cyan2:#0fb6d6; --text:#e8f1ff; --muted:#8fa3c9;
+  --safe:#22c55e; --caution:#facc15; --suspicious:#fb923c; --critical:#ef4444;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Tajawal",system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--text);
+  background:radial-gradient(1200px 600px at 80% -10%,#0c2a6b55,transparent),radial-gradient(900px 500px at 0% 100%,#0a3a6b44,transparent),var(--bg);min-height:100vh}
+a{color:var(--cyan)}
+.wrap{max-width:1040px;margin:0 auto;padding:20px}
+header{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{display:flex;align-items:center;gap:12px}
+.brand img{height:54px;border-radius:10px}
+.brand h1{margin:0;font-size:22px;letter-spacing:.5px}
+.brand small{color:var(--cyan);display:block;font-size:13px}
+.nav{display:flex;gap:8px}
+.btn{border:1px solid var(--line);background:var(--bg2);color:var(--text);padding:8px 14px;border-radius:10px;cursor:pointer;font:inherit;text-decoration:none;font-size:14px}
+.btn:hover{border-color:var(--cyan)}
+.hero{text-align:center;margin:34px 0 18px}
+.hero h2{font-size:34px;margin:0 0 8px;font-weight:800}
+.hero h2 span{color:var(--cyan)}
+.hero p{color:var(--muted);margin:0 auto;max-width:640px;line-height:1.7}
+.card{background:linear-gradient(180deg,#10214f,#0c1a40);border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:0 10px 40px #0006}
+textarea,input{width:100%;background:#071233;border:1px solid var(--line);color:var(--text);border-radius:12px;padding:14px;font:inherit;font-size:16px;resize:vertical}
+textarea:focus,input:focus{outline:none;border-color:var(--cyan);box-shadow:0 0 0 3px #22e0f222}
+.row{display:flex;gap:10px;margin-top:10px;flex-wrap:wrap;align-items:center}
+.primary{background:linear-gradient(90deg,var(--cyan),var(--cyan2));color:#04122e;border:0;font-weight:800;padding:13px 26px;border-radius:12px;cursor:pointer;font:inherit;font-weight:800;font-size:17px}
+.primary:disabled{opacity:.6}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.chip{font-size:13px;padding:6px 10px;border-radius:999px;border:1px solid var(--line);background:#0a1840;color:var(--muted);cursor:pointer}
+.chip:hover{color:var(--text);border-color:var(--cyan)}
+.domains{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin:22px 0}
+.dom{background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:12px 8px;text-align:center;font-size:13px;color:var(--muted)}
+.dom b{display:block;font-size:24px;margin-bottom:4px}
+#result{display:none;margin-top:18px}
+.grid{display:grid;grid-template-columns:300px 1fr;gap:16px}
+.gauge{text-align:center}
+.gauge .lvl{font-size:22px;font-weight:800;margin-top:-6px}
+.gauge .cat{color:var(--muted);margin-top:6px}
+.official{margin-top:10px;color:var(--safe);font-weight:700}
+h3{margin:0 0 12px;font-size:17px;color:var(--cyan)}
+.reason{display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px dashed var(--line)}
+.reason:last-child{border:0}
+.tag{font-size:11px;padding:2px 7px;border-radius:6px;background:#132a63;color:var(--cyan);white-space:nowrap}
+.tag.text{background:#2a1e5a;color:#c4b5fd}.tag.community{background:#4a1d1d;color:#fca5a5}.tag.trust{background:#123d2a;color:#86efac}
+.reason .w{margin-inline-start:auto;font-weight:700;color:var(--muted);font-size:13px;white-space:nowrap}
+.ev{color:var(--muted);font-size:12px;direction:ltr;unicode-bidi:plaintext}
+.bars .b{margin:9px 0}
+.bars .lbl{display:flex;justify-content:space-between;font-size:14px;margin-bottom:4px}
+.bar{height:9px;background:#071233;border-radius:99px;overflow:hidden}
+.bar i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--cyan2),var(--cyan));transition:width .8s}
+.terms span{display:inline-block;margin:3px;padding:4px 9px;border-radius:8px;background:#2a1e5a;color:#ddd6fe;font-size:13px}
+ul.adv{margin:0;padding-inline-start:18px;line-height:1.9}
+.report{background:#2a0f17;border:1px solid #5b1a2a}
+.report h3{color:#fca5a5}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
+footer{text-align:center;color:var(--muted);font-size:13px;margin:36px 0 10px}
+.spinner{display:inline-block;width:16px;height:16px;border:3px solid #04122e55;border-top-color:#04122e;border-radius:50%;animation:s 1s linear infinite;vertical-align:middle}
+@keyframes s{to{transform:rotate(360deg)}}
+@media(max-width:820px){.grid,.cols{grid-template-columns:1fr}.domains{grid-template-columns:repeat(3,1fr)}.hero h2{font-size:26px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">
+      <img src="/static/logo.jpg" alt="Mirgab">
+      <div><h1>MIRGAB AI</h1><small data-i="tagline"></small></div>
+    </div>
+    <div class="nav">
+      <a class="btn" href="/dashboard" data-i="dashboard"></a>
+      <button class="btn" id="langBtn">English</button>
+    </div>
+  </header>
+
+  <section class="hero">
+    <h2 data-i="heroTitle"></h2>
+    <p data-i="heroSub"></p>
+  </section>
+
+  <div class="card">
+    <textarea id="text" rows="5" data-ph="placeholder"></textarea>
+    <div class="row">
+      <input id="url" data-ph="urlPlaceholder" style="flex:1;min-width:220px" dir="ltr">
+      <button class="primary" id="go" data-i="check"></button>
+    </div>
+    <div class="chips" id="examples"></div>
+  </div>
+
+  <div class="domains" id="domains"></div>
+
+  <div id="result">
+    <div class="grid">
+      <div class="card gauge">
+        <svg viewBox="0 0 200 120" width="100%"><path d="M20 105 A80 80 0 0 1 180 105" stroke="#071233" stroke-width="16" fill="none" stroke-linecap="round"/>
+          <path id="arc" d="M20 105 A80 80 0 0 1 180 105" stroke="var(--cyan)" stroke-width="16" fill="none" stroke-linecap="round" stroke-dasharray="251.3" stroke-dashoffset="251.3" style="transition:stroke-dashoffset 1s,stroke .5s"/>
+          <text id="scoreTxt" x="100" y="98" text-anchor="middle" font-size="38" font-weight="800" fill="#e8f1ff">0</text></svg>
+        <div class="lvl" id="lvl"></div>
+        <div class="cat" id="cat"></div>
+        <div class="official" id="official"></div>
+        <div class="bars" style="margin-top:16px;text-align:start">
+          <h3 data-i="engines"></h3>
+          <div id="components"></div>
+        </div>
+      </div>
+      <div class="card">
+        <h3 data-i="why"></h3>
+        <div id="reasons"></div>
+        <div id="termsBox" style="margin-top:14px"><h3 data-i="aiTerms"></h3><div class="terms" id="terms"></div></div>
+      </div>
+    </div>
+    <div class="cols">
+      <div class="card bars"><h3 data-i="impact"></h3><div id="impact"></div><div id="domainShare" style="margin-top:12px"></div></div>
+      <div class="card"><h3 data-i="advice"></h3><ul class="adv" id="advice"></ul></div>
+    </div>
+    <div class="card report" id="reportBox" style="margin-top:16px">
+      <h3 data-i="reportTitle"></h3>
+      <ul class="adv" id="channels"></ul>
+      <div class="row" id="communityRow"><button class="btn" id="reportBtn" data-i="reportBtn"></button><span id="reportMsg" class="ev"></span></div>
+    </div>
+  </div>
+
+  <footer data-i="footer"></footer>
+</div>
+
+<script>
+const I18N={
+ ar:{tagline:"حمايتك قبل لا تضغط",dashboard:"لوحة المؤشرات",heroTitle:"تحقّق <span>قبل</span> أن تضغط",
+  heroSub:"الصق رابطاً أو نص إعلان أو رسالة، وسيحلله مِرقاب بالذكاء الاصطناعي ويخبرك بمستوى الخطورة وأسبابها وكيف تحمي نفسك.",
+  placeholder:"الصق هنا نص الإعلان أو الرسالة أو الرابط…",urlPlaceholder:"رابط الموقع (اختياري) https://",check:"افحص الآن",
+  why:"لماذا؟ (أسباب الاشتباه)",aiTerms:"كلمات رصدها نموذج الذكاء الاصطناعي",impact:"الأثر متعدد الأبعاد",advice:"كيف تحمي نفسك",
+  reportTitle:"إذا تعرضت للاحتيال أو اشتبهت به",reportBtn:"أبلغ عن هذا الرابط لمِرقاب",engines:"محركات التحليل",
+  financial:"مالي",health:"صحي",identity:"البيانات والهوية",social:"اجتماعي وثقة",url:"تحليل الرابط",content_rules:"قواعد الخبراء",ml:"نموذج AI",
+  trust_reduction:"مؤشرات الثقة (تخفيض)",src_url:"رابط",src_text:"محتوى",src_community:"بلاغات",src_trust:"ثقة",none:"لا توجد مؤشرات احتيال واضحة.",
+  reported:"تم استلام البلاغ، شكراً لك. عدد البلاغات على هذا النطاق: ",domainsLbl:"مجالات الاحتيال المرصودة",
+  footer:"مِرقاب • نموذج أولي لمسابقة شرطة أبوظبي × 42 أبوظبي • النتائج إرشادية ولا تغني عن التحقق من الجهات الرسمية",
+  d:[["🏠","احتيال عقاري"],["💊","أدوية غير مرخصة"],["🛒","متاجر وهمية"],["📈","احتيال استثماري"],["🏦","انتحال جهات"],["📍","روابط الخرائط"]]},
+ en:{tagline:"Protection before you click",dashboard:"Dashboard",heroTitle:"Check <span>before</span> you click",
+  heroSub:"Paste a link, an ad or a message. Mirgab analyses it with AI and tells you the risk level, the reasons, and how to protect yourself.",
+  placeholder:"Paste the ad, message or link here…",urlPlaceholder:"Website link (optional) https://",check:"Check now",
+  why:"Why? (reasons for suspicion)",aiTerms:"Words flagged by the AI model",impact:"Multi-dimensional impact",advice:"How to protect yourself",
+  reportTitle:"If you were scammed or suspect fraud",reportBtn:"Report this link to Mirgab",engines:"Analysis engines",
+  financial:"Financial",health:"Health",identity:"Data & identity",social:"Social & trust",url:"URL analysis",content_rules:"Expert rules",ml:"AI model",
+  trust_reduction:"Trust signals (reduction)",src_url:"URL",src_text:"Content",src_community:"Reports",src_trust:"Trust",none:"No clear fraud indicators.",
+  reported:"Report received, thank you. Reports on this domain: ",domainsLbl:"Fraud domains detected",
+  footer:"Mirgab • Prototype for the Abu Dhabi Police × 42 Abu Dhabi competition • Results are guidance; always verify with official sources",
+  d:[["🏠","Real estate"],["💊","Unlicensed meds"],["🛒","Fake stores"],["📈","Investment"],["🏦","Impersonation"],["📍","Maps links"]]}
+};
+const EXAMPLES=[
+ {ar:"🏠 إعلان شقة",en:"🏠 Rental ad",t:"فيلا فاخرة في جزيرة الريم بإيجار 1200 درهم شهري فقط. المالك خارج الدولة، حول العربون ونرسل لك المفاتيح. واتساب فقط"},
+ {ar:"💊 أدوية",en:"💊 Medicine",t:"Buy Ozempic and Xanax without prescription, discreet delivery anywhere in UAE. Order on WhatsApp only."},
+ {ar:"🛒 متجر",en:"🛒 Store",t:"ايفون 17 برو بخصم 90% فقط 499 درهم! تحويل بنكي فقط ولا يوجد دفع عند الاستلام. العرض اليوم فقط",u:"https://iphone-uae-deals.shop"},
+ {ar:"📈 استثمار",en:"📈 Investment",t:"Guaranteed returns of 40% weekly! Join our VIP group, invite friends for referral bonus. Minimum deposit 500 AED in USDT."},
+ {ar:"🏦 رسالة بنك",en:"🏦 Bank SMS",t:"عميلنا العزيز، سيتم إيقاف حسابك. يرجى تحديث الهوية فوراً وإدخال رمز التحقق عبر الرابط https://adcb-secure-update.com/login"},
+ {ar:"📍 نتيجة خرائط",en:"📍 Maps result",t:"Found the bank customer service number on Google Maps listing, they asked me to share my card number and OTP",u:"https://maps.app.goo.gl/Xy12ab"},
+ {ar:"✅ رسالة سليمة",en:"✅ Safe message",t:"بنك أبوظبي التجاري: لن نطلب منك أبداً رمز التحقق أو الرقم السري. لا تشارك رمز التحقق مع أي شخص.",u:"https://www.adcb.com"}
+];
+let lang=localStorage.getItem("mirgab_lang")||"ar", last=null;
+const $=id=>document.getElementById(id);
+function applyLang(){
+  const L=I18N[lang]; document.documentElement.lang=lang; document.documentElement.dir=lang==="ar"?"rtl":"ltr";
+  document.querySelectorAll("[data-i]").forEach(e=>e.innerHTML=L[e.dataset.i]);
+  document.querySelectorAll("[data-ph]").forEach(e=>e.placeholder=L[e.dataset.ph]);
+  $("langBtn").textContent=lang==="ar"?"English":"العربية";
+  $("domains").innerHTML=L.d.map(([i,t])=>`<div class="dom"><b>${i}</b>${t}</div>`).join("");
+  $("examples").innerHTML=EXAMPLES.map((e,k)=>`<span class="chip" data-k="${k}">${e[lang]}</span>`).join("");
+  document.querySelectorAll(".chip").forEach(c=>c.onclick=()=>{const e=EXAMPLES[c.dataset.k];$("text").value=e.t;$("url").value=e.u||"";run();});
+  if(last) render(last);
+}
+$("langBtn").onclick=()=>{lang=lang==="ar"?"en":"ar";localStorage.setItem("mirgab_lang",lang);applyLang();};
+const COLORS={safe:"var(--safe)",caution:"var(--caution)",suspicious:"var(--suspicious)",critical:"var(--critical)"};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function bar(label,v,color){return `<div class="b"><div class="lbl"><span>${label}</span><b>${v}</b></div><div class="bar"><i style="width:${v}%;${color?`background:${color}`:""}"></i></div></div>`}
+async function run(){
+  const text=$("text").value.trim(), url=$("url").value.trim(); if(!text&&!url) return;
+  const b=$("go"); b.disabled=true; b.innerHTML='<span class="spinner"></span>';
+  try{
+    const r=await fetch("/api/analyze",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({text,url})});
+    last=await r.json(); render(last); $("result").style.display="block"; $("result").scrollIntoView({behavior:"smooth"});
+  }finally{b.disabled=false; b.innerHTML=I18N[lang].check;}
+}
+$("go").onclick=run;
+$("text").addEventListener("keydown",e=>{if(e.key==="Enter"&&(e.ctrlKey||e.metaKey))run();});
+function render(r){
+  const L=I18N[lang], col=COLORS[r.level];
+  $("arc").style.strokeDashoffset=251.3*(1-r.score/100); $("arc").style.stroke=col;
+  $("scoreTxt").textContent=r.score; $("lvl").textContent=r.level_label[lang]; $("lvl").style.color=col;
+  $("cat").textContent=r.category[lang];
+  $("official").textContent=r.official_entity?("✔ "+r.official_entity):"";
+  $("components").innerHTML=["url","content_rules","ml","trust_reduction"].map(k=>bar(L[k],r.components[k],k==="trust_reduction"?"var(--safe)":"")).join("");
+  const items=r.reasons.map(x=>`<div class="reason"><span class="tag ${x.source}">${L["src_"+x.source]}</span><div>${esc(x[lang])}${x.evidence&&x.evidence.length?`<div class="ev">${x.evidence.map(esc).join(" · ")}</div>`:""}</div><span class="w">+${Math.round(x.weight*100)}</span></div>`)
+    .concat(r.trust_signals.map(x=>`<div class="reason"><span class="tag trust">${L.src_trust}</span><div>${esc(x[lang])}</div><span class="w" style="color:var(--safe)">−${Math.round(x.weight*100)}</span></div>`));
+  $("reasons").innerHTML=items.length?items.join(""):`<p class="ev">${L.none}</p>`;
+  const terms=r.ml&&r.ml.top_fraud_terms&&r.ml.top_fraud_terms.length?r.ml.top_fraud_terms:null;
+  $("termsBox").style.display=terms?"block":"none";
+  if(terms) $("terms").innerHTML=terms.map(t=>`<span>${esc(t.term)}</span>`).join("");
+  $("impact").innerHTML=["financial","health","identity","social"].map(k=>bar(L[k],r.impact[k],r.impact[k]>=60?"var(--critical)":r.impact[k]>=30?"var(--suspicious)":"")).join("");
+  $("domainShare").innerHTML=r.domains.length&&r.score>=25?`<div class="ev" style="margin-bottom:6px">${L.domainsLbl}</div>`+r.domains.map(d=>`<span class="chip">${esc(d[lang])} · ${Math.round(d.share*100)}%</span>`).join(" "):"";
+  $("advice").innerHTML=r.advice[lang].map(a=>`<li>${esc(a)}</li>`).join("");
+  $("reportBox").style.display=r.report_channels?"block":"none";
+  if(r.report_channels) $("channels").innerHTML=r.report_channels[lang].map(a=>`<li>${esc(a)}</li>`).join("");
+  $("communityRow").style.display=(r.urls.length&&!r.official_entity)?"flex":"none"; $("reportMsg").textContent="";
+}
+$("reportBtn").onclick=async()=>{
+  if(!last||!last.urls.length) return;
+  const r=await fetch("/api/report",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({url:last.urls[0].url,category:last.category.key})});
+  const j=await r.json(); $("reportMsg").textContent=j.ok?I18N[lang].reported+j.reports:(j.message||"error");
+};
+applyLang();
+</script>
+</body>
+</html>
